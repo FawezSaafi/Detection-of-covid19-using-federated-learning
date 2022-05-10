@@ -1,0 +1,32 @@
+{
+    "session_details": [
+        {
+            "num_rounds": 4,
+            "ip_address": "[::]",
+            "port": 8080,
+            "resume": true,
+            "session": 1652174623
+        },
+        {
+            "num_rounds": 2,
+            "ip-adress": "[::]",
+            "port": 8080,
+            "resume": true,
+            "session": 1652180729
+        },
+        {
+            "num_rounds": 2,
+            "ip-adress": "[::]",
+            "port": 8080,
+            "resume": true,
+            "session": 1652181010
+        },
+        {
+            "num_rounds": 2,
+            "ip-adress": "[::]",
+            "port": 8080,
+            "resume": true,
+            "session": 1652181097
+        }
+    ]
+}
