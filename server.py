@@ -1,15 +1,14 @@
 # from fastapi import FastAPI
-import argparse
-import json
-from json import JSONDecodeError
+
 # from fastapi.encoders import jsonable_encoder
 # from fastapi.responses import JSONResponse
+import argparse
+
 import flwr as fl
 import numpy as np
 import os
 import time
 from FLstrategies import *
-
 
 # from blockchain_service import *
 # from fastapi.middleware.cors import CORSMiddleware
@@ -19,8 +18,7 @@ parser.add_argument('--@ip', action='store', type=str, help='ip address')
 parser.add_argument('--port', action='store', type=int, help='port')
 parser.add_argument('--resume', action='store', type=bool, help='resume from the previous weights')
 args = parser.parse_args()
-num_rounds,ipaddress,port,resume=vars(args)["rounds"],vars(args)["@ip"],vars(args)["port"],vars(args)["resume"]
-
+num_rounds, ipaddress, port, resume = vars(args)["rounds"], vars(args)["@ip"], vars(args)["port"], vars(args)["resume"]
 
 
 def launch_fl_session(num_rounds: int, ipaddress: str, port: int, resume: bool):
@@ -29,7 +27,7 @@ def launch_fl_session(num_rounds: int, ipaddress: str, port: int, resume: bool):
     session = int(time.time())
     with open('config_training.json', 'r+') as file:
         config = json.load(file)
-        data={'num_rounds': num_rounds,"ip-adress":ipaddress,"port":port,"resume":resume,"session":session}
+        data = {'num_rounds': num_rounds, "ip-adress": ipaddress, "port": port, "resume": resume, "session": session}
         config["session_details"].append(data)
         file.seek(0)
         json.dump(config, file, indent=4)

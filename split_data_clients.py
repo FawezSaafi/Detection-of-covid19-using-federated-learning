@@ -13,7 +13,7 @@ parser.add_argument('--fraction2', action='store', type=float, help='fraction of
 parser.add_argument('--fraction3', action='store', type=float, help='fraction of the client id ')
 parser.add_argument('--fraction4', action='store', type=float, help='fraction of the client id ')
 args = parser.parse_args()
-input_path, output_path,cl_id1,cl_id2,cl_id3,cl_id4, fraction1, fraction2, fraction3, fraction4 =vars(args)['input'],vars(args)['output'],vars(args)['cl1ID'],vars(args)['cl2ID'],vars(args)['cl3ID'],vars(args)['cl4ID'],vars(args)['fraction1'],vars(args)['fraction2'],vars(args)['fraction3'],vars(args)['fraction4']
+input_path, output_path,cl_id1,cl_id2,cl_id3,cl_id4, fraction1, fraction2, fraction3, fraction4 =vars(args)['input'],vars(args)['output'],vars(args)['cl1Id'],vars(args)['cl2Id'],vars(args)['cl3Id'],vars(args)['cl4Id'],vars(args)['fraction1'],vars(args)['fraction2'],vars(args)['fraction3'],vars(args)['fraction4']
 
 
 parser.add_argument('--port', action='store', type=int, help='client port')
@@ -83,3 +83,4 @@ def distribute(input_path, output_path,cl_id1,cl_id2,cl_id3,cl_id4,client1, clie
 
 
 distribute(input_path, output_path,cl_id1,cl_id2,cl_id3,cl_id4, fraction1, fraction2, fraction3, fraction4)
+#python split_data_clients.py --input "/run/media/fawaz/DATA/datasets/chest_xray/Training" --output "/home/fawaz/Desktop/FL_dataset/" --cl1Id 1 --cl2Id 2 --cl3Id 3 --cl4Id 4 --fraction1 0.5 --fraction2 0.5 --fraction3 0 --fraction4 0

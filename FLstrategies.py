@@ -36,7 +36,6 @@ class SaveModelStrategy(fl.server.strategy.FedAvg):
             initial_parameters=initial_parameters,
         )
 
-
     def aggregate_fit(
             self,
             rnd,
@@ -73,10 +72,6 @@ class SaveModelStrategy(fl.server.strategy.FedAvg):
         return aggregated_weights
 
 
-
-
-
-
 # Define batch-size, nb of epochs and verbose for fitting
 def get_on_fit_config_fn() -> Callable[[int], Dict[str, str]]:
     """Return a function which returns training configurations."""
@@ -85,15 +80,22 @@ def get_on_fit_config_fn() -> Callable[[int], Dict[str, str]]:
         with open('config_training.json', 'r') as config_training:
             config = config_training.read()
             data = json.loads(config)
-            print(data["session_details"][-1]["session"])
-            session= data["session_details"][-1]["session"]
-        config = {
-            "batch_size": 32,
-            "epochs": 50,
-            "verbose": 0,
-            "rnd": rnd,
-            "session": session
-        }
+            # print(data["session_details"][-1]["session"])
+            session = data["session_details"][-1]["session"]
+            with open('model_config.json', 'r') as model_config:
+                config = model_config.read()
+                model_data = json.loads(config)
+                batch_size = model_data["batch_size"]
+                epochs = model_data["epochs"]
+                verbose = model_data["verbose"]
+
+                config = {
+                    "batch_size": batch_size,
+                    "epochs": epochs,
+                    "verbose": verbose,
+                    "rnd": rnd,
+                    "session": session
+                }
         return config
 
     return fit_config
@@ -101,7 +103,11 @@ def get_on_fit_config_fn() -> Callable[[int], Dict[str, str]]:
 
 # Define hyper-parameters for evaluation
 def evaluate_config(rnd: int):
-    val_steps = 5 if rnd < 4 else 10
+    with open('model_config.json', 'r') as model_config:
+        config = model_config.read()
+        data = json.loads(config)
+
+        val_steps = data["validation_steps"]
     with open('config_training.json', 'r') as config_training:
         config = config_training.read()
         data = json.loads(config)

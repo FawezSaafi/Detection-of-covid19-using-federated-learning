@@ -1,3 +1,4 @@
+import json
 import os
 
 import flwr as fl
@@ -53,7 +54,10 @@ class FlowerClient(fl.client.NumPyClient):
         self.model.set_weights(parameters)
         global train, test, valid
         train, test, valid = preprocess(data_path, str(client))
-        hist = self.model.fit_generator(train, steps_per_epoch=10, epochs=2, validation_data=valid, validation_steps=32)
+        with open('model_config.json', 'r') as model_config:
+            config_data = model_config.read()
+            model_data = json.loads(config_data)
+        hist = self.model.fit_generator(train, steps_per_epoch=model_data['steps_per_epoch'], epochs=model_data['epochs'], validation_data=valid, validation_steps=model_data['validation_steps'])
         params = self.model.get_weights()
 
         if not (os.path.exists(f'./Local-weights')):
@@ -63,7 +67,7 @@ class FlowerClient(fl.client.NumPyClient):
             os.mkdir(f"./Local-weights/Session-{session}")
 
         # Save training weights in the created directory
-        filename = f'./Local-weights/Session-{session}/Round-{config["rnd"]}-training-weights.npy'
+        filename = f'./Local-weights/Session-{session}/Round-{str(config["rnd"])}-training-weights.npy'
         np.save(filename, params)
         results = {
             "loss": hist.history["loss"][0],
@@ -88,4 +92,4 @@ class FlowerClient(fl.client.NumPyClient):
     #     grpc_max_message_length=1024 * 1024 * 1024,
     # )
 client = FlowerClient(model,client_id)
-fl.client.start_numpy_client(ip_address+":"+"8080", client=client)
+fl.client.start_numpy_client(ip_address+":"+str(port), client=client)

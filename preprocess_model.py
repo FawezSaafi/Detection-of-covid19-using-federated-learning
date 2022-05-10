@@ -11,13 +11,15 @@ from sklearn.model_selection import train_test_split
 
 
 def preprocess(data_path, number):  # data_path
-
+    i=0
     df = pd.DataFrame(columns=['label', 'path'])
 
     for filename in os.listdir(data_path + "/covid"):
+        i=i+1
         df.loc[i] = ["covid", data_path + "/covid/" + filename]
 
     for filename in os.listdir(data_path + "/normal"):
+        i=i+1
         df.loc[i] = ["normal", data_path + "/normal/" + filename]
 
     train_df, test_valid_df = train_test_split(df,
