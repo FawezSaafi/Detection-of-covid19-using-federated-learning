@@ -58,15 +58,15 @@ class SaveModelStrategy(fl.server.strategy.FedAvg):
 
             if not os.path.exists(f"./fl_sessions/Session-{session}"):
                 os.makedirs(f"./fl_sessions/Session-{session}")
-                if rnd < num_rounds:
-                    np.save(f"./fl_sessions/Session-{session}/round-{rnd}-weights.npy", aggregated_weights)
-                elif rnd == num_rounds:
-                    np.save(f"./fl_sessions/Session-{session}/global_session_model.npy", aggregated_weights)
+                #if rnd < num_rounds:
+                    #np.save(f"./fl_sessions/Session-{session}/round-{rnd}-weights.npy", aggregated_weights)
+            if os.path.exists(f"./fl_sessions/Session-{session}/round-weights.npy"):
+                os.remove(f"./fl_sessions/Session-{session}/round-weights.npy")
+                np.save(f"./fl_sessions/Session-{session}/round--weights.npy", aggregated_weights)
             else:
-                if rnd < num_rounds:
-                    np.save(f"./fl_sessions/Session-{session}/round-{rnd}-weights.npy", aggregated_weights)
-                elif rnd == num_rounds:
-                    np.save(f"./fl_sessions/Session-{session}/global_session_model.npy", aggregated_weights)
+                if os.path.exists(f"./fl_sessions/Session-{session}/round-weights.npy") :
+                    os.remove(f"./fl_sessions/Session-{session}/round-weights.npy")
+                    np.save(f"./fl_sessions/Session-{session}/round--weights.npy", aggregated_weights)
 
         #
         return aggregated_weights
@@ -120,3 +120,4 @@ def evaluate_config(rnd: int):
         session = data["session_details"][-1]['session']
         config = {"val_steps": val_steps, "verbose": 0, "rnd": rnd, "session": session}
     return config
+

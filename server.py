@@ -1,16 +1,7 @@
-# from fastapi import FastAPI
 
-# from fastapi.encoders import jsonable_encoder
-# from fastapi.responses import JSONResponse
 import argparse
-
-import flwr as fl
-import numpy as np
-import os
 import time
 from FLstrategies import *
-
-# from blockchain_service import *
 # from fastapi.middleware.cors import CORSMiddleware
 parser = argparse.ArgumentParser(description='Test.')
 parser.add_argument('--rounds', action='store', type=int, help='number of rounds')
@@ -24,10 +15,10 @@ num_rounds, ipaddress, port, resume = vars(args)["rounds"], vars(args)["@ip"], v
 def launch_fl_session(num_rounds: int, ipaddress: str, port: int, resume: bool):
     """
     """
-    session = int(time.time())
+    session =str(time.time())
     with open('config_training.json', 'r+') as file:
         config = json.load(file)
-        data = {'num_rounds': num_rounds, "ip-adress": ipaddress, "port": port, "resume": resume, "session": session}
+        data = {'num_rounds': num_rounds, "resume": resume, "session": session}
         config["session_details"].append(data)
         file.seek(0)
         json.dump(config, file, indent=4)
@@ -45,7 +36,6 @@ def launch_fl_session(num_rounds: int, ipaddress: str, port: int, resume: bool):
         for name in dirs:
             if name.find('Session') != -1:
                 sessions.append(name)
-    # loop through fl_sessions sub-folders and get the list of directories containing the weights
 
     if (resume and len(sessions) != 0):
         # test if we will start training from the last session weights and

@@ -9,87 +9,8 @@
         },
         {
             "num_rounds": 2,
-            "ip-adress": "[::]",
-            "port": 8080,
             "resume": true,
-            "session": 1652180729
-        },
-        {
-            "num_rounds": 2,
-            "ip-adress": "[::]",
-            "port": 8080,
-            "resume": true,
-            "session": 1652181010
-        },
-        {
-            "num_rounds": 2,
-            "ip-adress": "[::]",
-            "port": 8080,
-            "resume": true,
-            "session": 1652181097
-        },
-        {
-            "num_rounds": 2,
-            "ip-adress": "[::]",
-            "port": 8080,
-            "resume": true,
-            "session": 1652190665
-        },
-        {
-            "num_rounds": 2,
-            "ip-adress": "[::]",
-            "port": 8080,
-            "resume": true,
-            "session": 1652195279
-        },
-        {
-            "num_rounds": 2,
-            "ip-adress": "[::]",
-            "port": 8080,
-            "resume": true,
-            "session": 1652196110
-        },
-        {
-            "num_rounds": 2,
-            "ip-adress": "[::]",
-            "port": 8080,
-            "resume": true,
-            "session": 1652196268
-        },
-        {
-            "num_rounds": 2,
-            "ip-adress": "[::]",
-            "port": 8080,
-            "resume": true,
-            "session": 1652198402
-        },
-        {
-            "num_rounds": 2,
-            "ip-adress": "[::]",
-            "port": 8080,
-            "resume": true,
-            "session": 1652199068
-        },
-        {
-            "num_rounds": 2,
-            "ip-adress": "[::]",
-            "port": 8080,
-            "resume": true,
-            "session": 1652261123
-        },
-        {
-            "num_rounds": 2,
-            "ip-adress": "[::]",
-            "port": 8080,
-            "resume": true,
-            "session": 1652261271
-        },
-        {
-            "num_rounds": 2,
-            "ip-adress": "[::]",
-            "port": 8080,
-            "resume": true,
-            "session": 1652261381
+            "session": "1652281067.9730327"
         }
     ]
 }

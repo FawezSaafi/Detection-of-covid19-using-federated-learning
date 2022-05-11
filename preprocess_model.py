@@ -1,10 +1,10 @@
 
 from keras.applications.vgg16 import VGG16
-from keras.layers import Flatten, Dense, Dropout, MaxPool2D
+from keras.layers import Flatten
 from keras.models import Model
 from keras.preprocessing.image import ImageDataGenerator
 from keras.applications import vgg16
-from keras.layers import Dense, MaxPool2D, Conv2D
+from keras.layers import Dense
 import pandas as pd
 import os
 from sklearn.model_selection import train_test_split
