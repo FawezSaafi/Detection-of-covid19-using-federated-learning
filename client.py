@@ -51,13 +51,14 @@ class FlowerClient(fl.client.NumPyClient):
 
     def fit(self, parameters, config):
         session = config["session"]
+        steps_per_epoch : int = config["steps_per_epoch"]
+        epochs: int = config["epochs"]
+        validation_steps=config["validation_steps"]
         self.model.set_weights(parameters)
         global train, test, valid
         train, test, valid = preprocess(data_path, str(client))
-        with open('model_config.json', 'r') as model_config:
-            config_data = model_config.read()
-            model_data = json.loads(config_data)
-        hist = self.model.fit_generator(train, steps_per_epoch=model_data['steps_per_epoch'], epochs=model_data['epochs'], validation_data=valid, validation_steps=model_data['validation_steps'])
+
+        hist = self.model.fit_generator(train, steps_per_epoch=steps_per_epoch, epochs=epochs, validation_data=valid, validation_steps=validation_steps)
         params = self.model.get_weights()
 
         if not (os.path.exists(f'./Local-weights')):
@@ -78,6 +79,8 @@ class FlowerClient(fl.client.NumPyClient):
         return self.model.get_weights(), len(train), results
 
     def evaluate(self, parameters, config):
+
+        steps: int = config["val_steps"]
 
         self.model.set_weights(parameters)
         loss, accuracy = model.evaluate_generator(test)

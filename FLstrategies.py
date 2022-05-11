@@ -88,8 +88,14 @@ def get_on_fit_config_fn() -> Callable[[int], Dict[str, str]]:
                 batch_size = model_data["batch_size"]
                 epochs = model_data["epochs"]
                 verbose = model_data["verbose"]
+                steps_per_epoch = model_data['steps_per_epoch']
+                validation_steps = model_data['validation_steps']
+
 
                 config = {
+                    "validation_steps": validation_steps,
+                    "steps_per_epoch":steps_per_epoch,
+
                     "batch_size": batch_size,
                     "epochs": epochs,
                     "verbose": verbose,
@@ -112,4 +118,5 @@ def evaluate_config(rnd: int):
         config = config_training.read()
         data = json.loads(config)
         session = data["session_details"][-1]['session']
-    return {"val_steps": val_steps, "verbose": 0, "rnd": rnd, "session": session}
+        config = {"val_steps": val_steps, "verbose": 0, "rnd": rnd, "session": session}
+    return config
