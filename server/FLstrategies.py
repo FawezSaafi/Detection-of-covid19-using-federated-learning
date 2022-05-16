@@ -5,7 +5,12 @@ from typing import Callable, Dict, Optional, Tuple
 from flwr.common import Parameters, Scalar, Weights
 from typing import Callable, Dict
 import json
+import socket
 
+from preprocess_model import vgg_model
+
+model = vgg_model()
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
 class SaveModelStrategy(fl.server.strategy.FedAvg):
     def __init__(self,
@@ -62,13 +67,12 @@ class SaveModelStrategy(fl.server.strategy.FedAvg):
                     #np.save(f"./fl_sessions/Session-{session}/round-{rnd}-weights.npy", aggregated_weights)
             if os.path.exists(f"./fl_sessions/Session-{session}/round-weights.npy"):
                 os.remove(f"./fl_sessions/Session-{session}/round-weights.npy")
-                np.save(f"./fl_sessions/Session-{session}/round--weights.npy", aggregated_weights)
-            else:
-                if os.path.exists(f"./fl_sessions/Session-{session}/round-weights.npy") :
-                    os.remove(f"./fl_sessions/Session-{session}/round-weights.npy")
-                    np.save(f"./fl_sessions/Session-{session}/round--weights.npy", aggregated_weights)
+                np.save(f"./fl_sessions/Session-{session}/round-weights.npy", aggregated_weights)
+            else :
+                np.save(f"./fl_sessions/Session-{session}/round-weights.npy", aggregated_weights)
 
-        #
+
+
         return aggregated_weights
 
 
@@ -82,7 +86,8 @@ def get_on_fit_config_fn() -> Callable[[int], Dict[str, str]]:
             data = json.loads(config)
             # print(data["session_details"][-1]["session"])
             session = data["session_details"][-1]["session"]
-            with open('model_config.json', 'r') as model_config:
+
+            with open('server/model_config.json', 'r') as model_config:
                 config = model_config.read()
                 model_data = json.loads(config)
                 batch_size = model_data["batch_size"]
@@ -109,7 +114,7 @@ def get_on_fit_config_fn() -> Callable[[int], Dict[str, str]]:
 
 # Define hyper-parameters for evaluation
 def evaluate_config(rnd: int):
-    with open('model_config.json', 'r') as model_config:
+    with open('server/model_config.json', 'r') as model_config:
         config = model_config.read()
         data = json.loads(config)
 

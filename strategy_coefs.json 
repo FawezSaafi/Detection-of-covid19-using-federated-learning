@@ -1,0 +1,7 @@
+{
+  "min_available_clients": 2,
+  "min_evaluation_clients": 2,
+  "min_fitting_clients": 2,
+  "fraction_of_clients_for_fitting": 1.0,
+  "fraction_of_clients_for_evaluation": 1.0
+}
