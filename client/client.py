@@ -1,10 +1,7 @@
-
 import flwr as fl
 import argparse
 import sys
 import warnings
-
-
 
 from preprocess_model import vgg_model, preprocess
 
@@ -14,6 +11,7 @@ parser = argparse.ArgumentParser(description='Test.')
 parser.add_argument('--client', action='store', type=int, help='client number')
 parser.add_argument('--id', action='store', type=int, help='client number')
 parser.add_argument('--@ip', action='store', type=str, help='ip-address')
+
 parser.add_argument('--port', action='store', type=int, help='client port')
 parser.add_argument('--path', action='store', type=str, help='path of the client dataset')
 
@@ -34,7 +32,7 @@ class FlowerClient(fl.client.NumPyClient):
         self.model = model
 
         self.client_id = client_id
-
+client_api
     def get_parameters(self):
         return self.model.get_weights()
 

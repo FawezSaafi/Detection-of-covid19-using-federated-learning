@@ -1,5 +1,7 @@
 import argparse
-import time
+import datetime as dt
+
+
 
 from keras.applications import vgg16
 from keras_preprocessing.image import ImageDataGenerator
@@ -24,7 +26,9 @@ num_rounds, ipaddress, port, resume, test_path = vars(args)["rounds"], vars(args
 def launch_fl_session(num_rounds: int, ipaddress: str, port: int, resume: bool):
     """
     """
-    session = str(time.time())
+    today = dt.datetime.today()
+    session = today.strftime("%d-%m-%Y-%H-%M")
+
     with open('config_training.json', 'r+') as file:
         config = json.load(file)
         data = {'num_rounds': num_rounds, "resume": resume, "session": session}
@@ -49,9 +53,9 @@ def launch_fl_session(num_rounds: int, ipaddress: str, port: int, resume: bool):
     if (resume and len(sessions) != 0):
         # test if we will start def get_eval_fn(model):
         # if we have at least a session directory
-        if os.path.exists(f'./fl_sessions/{sessions[-1]}/global_session_model.npy'):
+        if os.path.exists(f'./fl_sessions/{sessions[-1]}/round-weights.npy'):
             # if the latest session directory contains the global model parameters
-            initial_parameters = np.load(f"./fl_sessions/{sessions[-1]}/global_session_model.npy", allow_pickle=True)
+            initial_parameters = np.load(f"./fl_sessions/{sessions[-1]}/round-weights.npy", allow_pickle=True)
             initial_params = initial_parameters[0]
             # load latest session's global model parameters
     with open('strategy_coefs.json ', 'r') as file:
