@@ -32,7 +32,6 @@ class FlowerClient(fl.client.NumPyClient):
         self.model = model
 
         self.client_id = client_id
-client_api
     def get_parameters(self):
         return self.model.get_weights()
 

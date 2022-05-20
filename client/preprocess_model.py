@@ -9,16 +9,17 @@ import pandas as pd
 import os
 from sklearn.model_selection import train_test_split
 
+
 def preprocess(data_path, number):  # data_path
-    i=0
+    i = 0
     df = pd.DataFrame(columns=['label', 'path'])
 
     for filename in os.listdir(data_path + "/covid"):
-        i=i+1
+        i = i + 1
         df.loc[i] = ["covid", data_path + "/covid/" + filename]
 
     for filename in os.listdir(data_path + "/normal"):
-        i=i+1
+        i = i + 1
         df.loc[i] = ["normal", data_path + "/normal/" + filename]
 
     train_df, test_valid_df = train_test_split(df,
@@ -26,13 +27,9 @@ def preprocess(data_path, number):  # data_path
                                                random_state=40,
                                                stratify=df[['label']])
 
-
     test_df, val_df = train_test_split(test_valid_df,
                                        test_size=0.50,
                                        random_state=40)
-
-
-
 
     train_data_gen = ImageDataGenerator(preprocessing_function=vgg16.preprocess_input, zoom_range=0.2,
                                         horizontal_flip=True, shear_range=0.2, rescale=1. / 255)
@@ -47,7 +44,6 @@ def preprocess(data_path, number):  # data_path
     return train, test, valid
 
 
-
 def vgg_model():
     vgg = VGG16(input_shape=(224, 224, 3), include_top=False)
     for layer in vgg.layers:  # Don't train the parameters again
@@ -57,27 +53,22 @@ def vgg_model():
 
     model = Model(vgg.input, x)
     return model
-def load_last_global_model_weights(model,weights_directory):
+
+
+def load_last_global_model_weights(weights_directory):
     """
     loads the last received weights in the directory
     in which the global model weights are saved
     """
-    # files list will contain the paths to the npy files in the directory
-    files_list=[]
+    # files list will contain the paths to the npy files in the directo-ry
+    files_list = []
     # check every file under the root directory to have .npy extension
-    for root, dirs, files in os.walk(weights_directory, topdown = False):
+    for root, dirs, files in os.walk(weights_directory, topdown=False):
         for file in files:
             if file.endswith(".npy"):
-                files_list.append(os.path.join(root,file))
+                files_list.append(os.path.join(root, file))
     # get the latest file
     latest_weights_file = max(files_list, key=os.path.getmtime)
     # load the weights from the file
-    weights=np.load(latest_weights_file,allow_pickle=True)
+    weights = np.load(latest_weights_file, allow_pickle=True)
     return weights
-
-
-
-
-
-
-
