@@ -7,6 +7,7 @@ from preprocess_model import vgg_model, preprocess
 
 if not sys.warnoptions:
     warnings.simplefilter("ignore")
+
 parser = argparse.ArgumentParser(description='Test.')
 parser.add_argument('--client', action='store', type=int, help='client number')
 parser.add_argument('--id', action='store', type=int, help='client number')
@@ -22,7 +23,7 @@ class_type = {0: 'Covid', 1: 'Normal'}
 model = vgg_model()
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-data_path = data_path + str(client_id) + "/"
+data_path = data_path + "/" + str(client_id) + "/"
 
 
 # Define Flower client
@@ -32,6 +33,7 @@ class FlowerClient(fl.client.NumPyClient):
         self.model = model
 
         self.client_id = client_id
+
     def get_parameters(self):
         return self.model.get_weights()
 
@@ -67,9 +69,10 @@ class FlowerClient(fl.client.NumPyClient):
 
 # start Flower client
 # fl.client.start_numpy_client(
-#     server_address=args.ipadress + ":" + str(args.port),
-#     client=FlowerClient(),
-#     grpc_max_message_length=1024 * 1024 * 1024,
+# server_address=ip_address + ":" + str(port),
+# client=FlowerClient(),
+# grpc_max_message_length=1024 * 1024 * 1024,
 # )
 client = FlowerClient(model, client_id)
 fl.client.start_numpy_client(ip_address + ":" + str(port), client=client)
+# python client/client.py --id 3 --@ip "[::]" --port 8080 --path "/home/fawaz/Desktop/FL_dataset/"

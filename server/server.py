@@ -1,26 +1,29 @@
 import argparse
 import datetime as dt
-
-
+import os
 
 from keras.applications import vgg16
 from keras_preprocessing.image import ImageDataGenerator
 import json
 
-from FLstrategies import *
+# from FLstrategies import *
 
 # from fastapi.middleware.cors import CORSMiddleware
+from FLstrategies import *
 
+# SaveModelStrategy, get_on_fit_config_fn, evaluate_config
 
-parser = argparse.ArgumentParser(description='Test.')
-parser.add_argument('--rounds', action='store', type=int, help='number of rounds')
-parser.add_argument('--@ip', action='store', type=str, help='ip address')
-parser.add_argument('--port', action='store', type=int, help='port')
-parser.add_argument('--resume', action='store', type=bool, help='resume from the previous weights')
-parser.add_argument('--test_path', action='store', type=str, help='test data to do a server-side evaluation')
-args = parser.parse_args()
-num_rounds, ipaddress, port, resume, test_path = vars(args)["rounds"], vars(args)["@ip"], vars(args)["port"], \
-                                                 vars(args)["resume"], vars(args)['test_path']
+# parser = argparse.ArgumentParser(description='Test.')
+# parser.add_argument('--rounds', action='store', type=int, help='number of rounds')
+# parser.add_argument('--@ip', action='store', type=str, help='ip address')
+# parser.add_argument('--port', action='store', type=int, help='port')
+# parser.add_argument('--resume', action='store', type=bool, help='resume from the previous weights')
+# parser.add_argument('--test_path', action='store', type=str, help='test data to do a server-side evaluation')
+# args = parser.parse_args()
+# num_rounds, ipaddress, port, resume, test_path = vars(args)["rounds"], vars(args)["@ip"], vars(args)["port"], \
+#                                                  vars(args)["resume"], vars(args)['test_path']
+
+test_path = '/home/fawaz/Desktop/FL_dataset/3'
 
 
 def launch_fl_session(num_rounds: int, ipaddress: str, port: int, resume: bool):
@@ -29,7 +32,7 @@ def launch_fl_session(num_rounds: int, ipaddress: str, port: int, resume: bool):
     today = dt.datetime.today()
     session = today.strftime("%d-%m-%Y-%H-%M")
 
-    with open('config_training.json', 'r+') as file:
+    with open(f'./../config_training.json', 'r+') as file:
         config = json.load(file)
         data = {'num_rounds': num_rounds, "resume": resume, "session": session}
         config["session_details"].append(data)
@@ -58,7 +61,7 @@ def launch_fl_session(num_rounds: int, ipaddress: str, port: int, resume: bool):
             initial_parameters = np.load(f"./fl_sessions/{sessions[-1]}/round-weights.npy", allow_pickle=True)
             initial_params = initial_parameters[0]
             # load latest session's global model parameters
-    with open('strategy_coefs.json ', 'r') as file:
+    with open(r'/home/fawaz/PycharmProjects/projet_pfe/strategy_coefs.json', 'r+') as file:
         config = json.load(file)
         data = json.dumps(config)
         data = json.loads(data)
@@ -101,11 +104,11 @@ def get_eval_fn(model):
         model.set_weights(weights)
         loss, accuracy = model.evaluate_generator(test)
 
-        with open('config_training.json', 'r') as config_training:
+        with open(f'./../config_training.json', 'r') as config_training:
             config = config_training.read()
             data = json.loads(config)
             session = data["session_details"][-1]["session"]
-        with open('server/evaluation.json', 'r+') as eval_file:
+        with open('evaluation.json', 'r+') as eval_file:
             config = json.load(eval_file)
             data = {session: {'global_loss': loss, 'global_accuracy': accuracy}}
 
@@ -118,6 +121,6 @@ def get_eval_fn(model):
         # return loss, {"accuracy": accuracy}
 
     return evaluate
+# launch_fl_session(num_rounds, ipaddress, port, resume)
 
-
-launch_fl_session(num_rounds, ipaddress, port, resume)
+# python server/server.py --rounds 2 --@ip "localhost" --port 8080 --resume True --test_path "/Users/macbookair/Desktop/fl-dataset/3"

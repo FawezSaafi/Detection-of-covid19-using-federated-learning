@@ -12,6 +12,7 @@ from preprocess_model import vgg_model
 model = vgg_model()
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
+
 class SaveModelStrategy(fl.server.strategy.FedAvg):
     def __init__(self,
                  *,
@@ -52,7 +53,7 @@ class SaveModelStrategy(fl.server.strategy.FedAvg):
 
             # get num_rounds from config_training json file to be use to verify
             # if the current round is the first round
-            with open('config_training.json', 'r') as config_training:
+            with open('./../config_training.json', 'r') as config_training:
                 config = config_training.read()
                 data = json.loads(config)
                 num_rounds = data["session_details"][-1]['num_rounds']
@@ -61,17 +62,15 @@ class SaveModelStrategy(fl.server.strategy.FedAvg):
             # Save aggregated_weights
             print(f"Saving round {rnd} aggregated_weights...")
 
-            if not os.path.exists(f"./fl_sessions/Session-{session}"):
-                os.makedirs(f"./fl_sessions/Session-{session}")
-                #if rnd < num_rounds:
-                    #np.save(f"./fl_sessions/Session-{session}/round-{rnd}-weights.npy", aggregated_weights)
-            if os.path.exists(f"./fl_sessions/Session-{session}/round-weights.npy"):
-                os.remove(f"./fl_sessions/Session-{session}/round-weights.npy")
-                np.save(f"./fl_sessions/Session-{session}/round-weights.npy", aggregated_weights)
-            else :
-                np.save(f"./fl_sessions/Session-{session}/round-weights.npy", aggregated_weights)
-
-
+            if not os.path.exists(f"./../fl_sessions/Session-{session}"):
+                os.makedirs(f"./../fl_sessions/Session-{session}")
+                # if rnd < num_rounds:
+                # np.save(f"./fl_sessions/Session-{session}/round-{rnd}-weights.npy", aggregated_weights)
+            if os.path.exists(f"./../fl_sessions/Session-{session}/round-weights.npy"):
+                os.remove(f"./../fl_sessions/Session-{session}/round-weights.npy")
+                np.save(f"./../fl_sessions/Session-{session}/round-weights.npy", aggregated_weights)
+            else:
+                np.save(f"./../fl_sessions/Session-{session}/round-weights.npy", aggregated_weights)
 
         return aggregated_weights
 
@@ -81,13 +80,13 @@ def get_on_fit_config_fn() -> Callable[[int], Dict[str, str]]:
     """Return a function which returns training configurations."""
 
     def fit_config(rnd: int) -> Dict[str, str]:
-        with open('config_training.json', 'r') as config_training:
+        with open(f'./../config_training.json', 'r') as config_training:
             config = config_training.read()
             data = json.loads(config)
             # print(data["session_details"][-1]["session"])
             session = data["session_details"][-1]["session"]
 
-            with open('server/model_config.json', 'r') as model_config:
+            with open('model_config.json', 'r') as model_config:
                 config = model_config.read()
                 model_data = json.loads(config)
                 batch_size = model_data["batch_size"]
@@ -96,10 +95,9 @@ def get_on_fit_config_fn() -> Callable[[int], Dict[str, str]]:
                 steps_per_epoch = model_data['steps_per_epoch']
                 validation_steps = model_data['validation_steps']
 
-
                 config = {
                     "validation_steps": validation_steps,
-                    "steps_per_epoch":steps_per_epoch,
+                    "steps_per_epoch": steps_per_epoch,
 
                     "batch_size": batch_size,
                     "epochs": epochs,
@@ -114,15 +112,14 @@ def get_on_fit_config_fn() -> Callable[[int], Dict[str, str]]:
 
 # Define hyper-parameters for evaluation
 def evaluate_config(rnd: int):
-    with open('server/model_config.json', 'r') as model_config:
+    with open('model_config.json', 'r') as model_config:
         config = model_config.read()
         data = json.loads(config)
 
         val_steps = data["validation_steps"]
-    with open('config_training.json', 'r') as config_training:
+    with open(f'./../config_training.json', 'r') as config_training:
         config = config_training.read()
         data = json.loads(config)
         session = data["session_details"][-1]['session']
         config = {"val_steps": val_steps, "verbose": 0, "rnd": rnd, "session": session}
     return config
-
