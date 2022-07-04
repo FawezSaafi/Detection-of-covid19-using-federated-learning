@@ -1,0 +1,71 @@
+.card-container{
+    width: 700px;
+    overflow: hidden;
+    box-shadow: 0px 0px 15px -5px;
+    margin-top: 100px;
+    margin-left: 600px;
+    margin-right: 300px;
+   }
+   .but{
+   margin-left:360px;
+   height: 30px;
+   width: 30px;
+   /* background-color: rgb(255, 255, 255);
+   color: rgba(80, 185, 250, 0.5); */
+   }
+   .line{
+   margin-left: 20px;
+   margin-right: 20px;
+   }
+   .text{
+   margin-top: 10px;
+   margin-left: 20px;
+   }
+   
+   .app {
+       width: 100%;
+       height: 60vh;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       
+     }
+     .table {
+       border: 2px solid rgb(116, 121, 116);
+       width: 600px;
+       height: 60px;
+       margin-top: -120px;
+     }
+       
+   .th {
+       border-bottom: 1px solid black;
+       background-color: rgb(163, 178, 228);
+     }
+   
+     td {
+       text-align: center;
+     }
+   .number{
+   margin-left: -230px;
+   margin-top: 5px;
+   }
+   .input{
+       height: 30px;
+   }
+   .form{
+   margin-top: -15px;
+   }
+   
+   /*.but1{
+       margin-left:150px;
+       height: 40px;
+       width: 100px;
+       background-color: grey;
+   }*/
+   
+   .but2{
+       margin-left:20px;
+       height: 40px;
+       width: 100px;
+       background-color: #89c9eb;
+   }

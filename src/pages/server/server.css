@@ -1,0 +1,82 @@
+.card-container{
+    width: 600px;
+    overflow: hidden;
+    box-shadow: 0px 0px 15px -5px;
+    margin-top: 50px;
+    margin-left: 300px;
+    margin-right: 300px;
+   }
+   .but{
+   margin-left:100px;
+   height: 30px;
+   width: 30px;
+   background-color: rgb(255, 255, 255);
+
+   }
+   .launch{
+     margin-left: 90px;
+     /* background-color: rgba(80, 185, 250, 0.5); */
+   }
+   .line{
+   margin-left: 20px;
+   margin-right: 20px;
+   }
+   .text{
+   margin-top: 10px;
+   margin-left: 20px;
+   /* font-size: large; */
+   }
+   
+   .app {
+       width: 100%;
+       height: 60vh;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       
+     }
+     .table {
+       border: 2px solid #89c9eb;
+       width: 500px;
+       height: 60px;
+       margin-top: -100px;
+     }
+       
+   .th1 {
+       border-bottom: 1px solid #89c9eb;
+       /* background-color: #CD6155; */
+       /* border-bottom-color: #89c9eb; */
+       background:linear-gradient(rgba(80, 185, 250, 0.5),transparent);
+  background-color:#132c3d ;
+  color: white;
+     }
+   
+     td {
+       text-align: center;
+     }
+   .number{
+   margin-left: -230px;
+   margin-top: 5px;
+   }
+   .input{
+       height: 30px;
+       width: 350px;
+       margin-left: 2px;
+   }
+   .form{
+   margin-top: -15px;
+   }
+   
+   /*.but1{
+       margin-left:150px;
+       height: 40px;
+       width: 100px;
+       background-color: grey;
+   }*/
+   
+   .but2{
+       margin-left:100px;
+       height: 40px;
+       width: 100px;
+       /* background-color: #89c9eb; */
+   }

@@ -274,6 +274,71 @@
             "num_rounds": 1,
             "resume": true,
             "session": "08-06-2022-19-13"
+        },
+        {
+            "num_rounds": 6,
+            "resume": true,
+            "session": "22-06-2022-00-42"
+        },
+        {
+            "num_rounds": 1,
+            "resume": true,
+            "session": "22-06-2022-01-21"
+        },
+        {
+            "num_rounds": 1,
+            "resume": true,
+            "session": "22-06-2022-01-25"
+        },
+        {
+            "num_rounds": 3,
+            "resume": true,
+            "session": "22-06-2022-21-21"
+        },
+        {
+            "num_rounds": 3,
+            "resume": true,
+            "session": "22-06-2022-21-29"
+        },
+        {
+            "num_rounds": 2,
+            "resume": true,
+            "session": "22-06-2022-21-49"
+        },
+        {
+            "num_rounds": 1,
+            "resume": true,
+            "session": "22-06-2022-21-56"
+        },
+        {
+            "num_rounds": 1,
+            "resume": true,
+            "session": "22-06-2022-22-24"
+        },
+        {
+            "num_rounds": 1,
+            "resume": true,
+            "session": "22-06-2022-22-33"
+        },
+        {
+            "num_rounds": 1,
+            "resume": true,
+            "session": "22-06-2022-22-36"
+        },
+        {
+            "num_rounds": 1,
+            "resume": true,
+            "session": "22-06-2022-23-13"
+        },
+        {
+            "num_rounds": 1,
+            "resume": true,
+            "session": "22-06-2022-23-18"
+        },
+        {
+            "num_rounds": 1,
+            "resume": true,
+            "session": "23-06-2022-13-53"
         }
     ]
 }

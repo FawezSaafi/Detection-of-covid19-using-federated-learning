@@ -89,4 +89,4 @@ def select_hist():
     cursor.execute(req)
     hist_list = cursor.fetchall()
     return hist_list
-# uvicorn server_api:main --reload
+# uvicorn server_api:app --reload

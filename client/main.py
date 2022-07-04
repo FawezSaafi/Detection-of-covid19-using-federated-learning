@@ -32,6 +32,7 @@ from datetime import datetime
 conn = MC.connect(host='localhost', database='mysql', user='root', password='')
 
 
+
 @app.post("/predictCovid")
 async def predict(file: UploadFile = File(...)):
     def get_img_array(img):
@@ -47,15 +48,13 @@ async def predict(file: UploadFile = File(...)):
     img = image.load_img(image_name, target_size=(224, 224, 3))
     model = vgg_model()
     model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-    weights = parameters_to_weights(load_last_global_model_weights(f'./../fl_sessions')[0])
-
+    weights = parameters_to_weights(load_last_global_model_weights(r'/home/fawaz/PycharmProjects/projet_pfe/fl_sessions')[0])
     model.set_weights(weights)
 
     img = get_img_array(img)
 
     res = class_type[np.argmax(model.predict(img))]
     os.remove(image_name)
-    print(res)
     return res
 
 
